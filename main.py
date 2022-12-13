@@ -32,8 +32,7 @@ def catch_ips():
 
 # def date_counter():
 for line in file:
-    if not re.match(date_regex, line).group(4) in date_array:
-        date_array.append((re.match(date_regex, line).group(4), 1))
+    date_array.append((re.match(date_regex, line).group(4), 1))
 print(Counter(date_array))
 
 
