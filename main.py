@@ -25,6 +25,7 @@ date_array=[]
 
 
 def catch_ips():
+    # for mapping
     for line in file:
         if not re.match(ip_regex, line).group(1) in ip_array:
             ip_array.append(re.match(ip_regex, line).group(1))
