@@ -1,5 +1,16 @@
 import re, requests, urllib, json
+from collections import Counter
 file = open("controltower_access.log", "r")
+
+'''
+Using Counter for speed, this library is much faster than counting manually:
+debug_ip_array=['20.203.142.208', '66.249.66.75', '20.203.142.208']
+debug_ip_list=[]
+for debug_ip in debug_ip_array:
+    if not debug_ip in debug_ip_list:
+        debug_ip_list.append((debug_ip, debug_ip_array.count(debug_ip)))
+print(debug_ip_list)
+'''
 
 
 # regex to catch ip addresses of strings in a apache log file
@@ -19,10 +30,11 @@ def catch_ips():
             ip_array.append(re.match(ip_regex, line).group(1))
 
 
-def date_counter():
-    for line in file:
-        if not re.match(date_regex, line).group(4) in date_array:
-            date_array.append((re.match(date_regex, line).group(4), 1))
+# def date_counter():
+for line in file:
+    if not re.match(date_regex, line).group(4) in date_array:
+        date_array.append((re.match(date_regex, line).group(4), 1))
+print(Counter(date_array))
 
 
 def localisation():
@@ -47,3 +59,4 @@ def localisation():
 # regex = '^(\S+) (\S+) (\S+) \[([\w:/]+\s[+\-]\d{4})\] "(\S+)\s?(\S+)?\s?(\S+)?" (\d{3}|-) (\d+|-)\s?"?([^"]*)"?\s?"?([^"]*)?"?$'
 
 # print(re.match(regex, debug_line1).group(11))
+
