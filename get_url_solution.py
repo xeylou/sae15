@@ -12,10 +12,10 @@ print(listip)
 
 while True:
     ip=input("Quelle est l'ip cible: ")
-    url = "http://ip-api.com/json/"
-    response = urllib.request.urlopen (url + ip)
-    data = response.read()
-    values = json.loads(data)
+    url="http://ip-api.com/json/"
+    response=urllib.request.urlopen(url+ip)
+    data=response.read()
+    values=json.loads(data)
 
     print(" IP: " + values['query'])
     print(" City: " + values['city'])
@@ -23,5 +23,7 @@ while True:
     print("Country: " + values['country'])
     print("Region: " + values['region'])
     print("Time zone: " + values['timezone'])
+    print("Latitude: " , values['lat'])
+    print("Longitude: " , values['lon'])
 
     break

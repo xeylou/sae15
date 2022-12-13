@@ -1,5 +1,6 @@
-import re
+import re, requests, urllib, json
 file = open("controltower_access.log", "r")
+
 
 # regex to catch ip addresses of strings in a apache log file
 ip_regex = re.compile(r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})')
@@ -11,13 +12,27 @@ date_regex = re.compile(r'(\S+) (\S+) (\S+) \[([\w:/]+\s[+\-]\d{4})]')
 ip_array=[]
 date_array=[]
 
-for line in file:
-    if not re.match(ip_regex, line).group(1) in ip_array:
-        ip_array.append(re.match(ip_regex, line).group(1))
-    if not re.match(date_regex, line).group(4) in date_array:
-        date_array.append((re.match(date_regex, line).group(4), 1))
 
-print(date_array=)
+def catch_ips():
+    for line in file:
+        if not re.match(ip_regex, line).group(1) in ip_array:
+            ip_array.append(re.match(ip_regex, line).group(1))
+
+
+def date_counter():
+    for line in file:
+        if not re.match(date_regex, line).group(4) in date_array:
+            date_array.append((re.match(date_regex, line).group(4), 1))
+
+
+def localisation():
+    for ip in ip_array:
+        url="http://ip-api.com/json/"
+        response=urllib.request.urlopen(url+ip)
+        data=response.read()
+        values=json.loads(data)
+        print(values['lat'])
+        print(values['lon'])
 
 
 
