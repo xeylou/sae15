@@ -1,6 +1,8 @@
 import re, requests, urllib, json
 from collections import Counter
+
 file = open("controltower_access.log", "r")
+file1 = open("dates_occurences.txt", "w")
 
 '''
 Using Counter for speed, this library is much faster than counting manually:
@@ -33,18 +35,21 @@ def catch_ips():
 
 # def date_counter():
 for line in file:
-    date_array.append((re.match(date_regex, line).group(4), 1))
-print(Counter(date_array))
+    date_array.append((re.match(date_regex, line).group(4)))
+file1.write(str(Counter(date_array)))
+file1.close()
+print("done")
+#print(Counter(date_array))
 
 
 def localisation():
+    geolocal_array=[]
     for ip in ip_array:
         url="http://ip-api.com/json/"
         response=urllib.request.urlopen(url+ip)
         data=response.read()
         values=json.loads(data)
-        print(values['lat'])
-        print(values['lon'])
+        geolocal_array.append([ip, values['lat'], values['lon']])
 
 
 
